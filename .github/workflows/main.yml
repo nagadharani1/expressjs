@@ -27,12 +27,12 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t dharani12345/myapp:1 .
+          docker build -t myapp .
 
       - name: Tag Docker image
         run: |
-          docker tag dharani12345/myapp:1
+          docker tag myapp:latest 211125698559.dkr.ecr.us-west-1.amazonaws.com/myapp:latest
 
       - name: Push Docker image to Amazon ECR
         run: |
-          docker push dharani12345/myapp:1
+          docker push 211125698559.dkr.ecr.us-west-1.amazonaws.com/myapp:latest
