@@ -4,7 +4,7 @@ RUN mkdir -p /home/app
 
 WORKDIR /home/app
 
-COPY /home/app
+COPY ./
 
 RUN npm install
 
