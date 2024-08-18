@@ -4,7 +4,7 @@ RUN mkdir -p /home/app
 
 WORKDIR /home/app
 
-COPY expressjs /home/app
+COPY /home/app
 
 RUN npm install
 
