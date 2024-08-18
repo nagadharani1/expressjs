@@ -1,36 +1,38 @@
-name: myapp
-on: 
-  push: 
-    branches: [ "master" ]
-  
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - master
+
 jobs:
-  Cypress-Test:
-   
-  
-    name: Build Docker Image
-    runs-on: ubuntu-latest  
-    steps:  
-        - name: Checkout
-          uses: actions/checkout@v2    
-          
-        - name: Setup AWS ECR Details
-          uses: aws-actions/configure-aws-credentials@v1
-          with:
-            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            aws-region: us-west-1
+  build:
+    name: Build and Push Docker Image to AWS ECR
+    runs-on: ubuntu-latest
 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-        - name: Login to Amazon ECR
-          id: login-pf-aws-ecr
-          uses: aws-actions/amazon-ecr-login@v1
-          
+      - name: Set up AWS ECR credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-1
 
-        - name: Build and push the tagged docker image to Amazon ECR
-          env:
-            ECR_REGISTRY: aws ecr get-login-password --region us-west-1 | docker login --username AWS --password-stdin 211125698559.dkr.ecr.us-west-1.amazonaws.com
-            ECR_REPOSITORY: 211125698559.dkr.ecr.us-west-1.amazonaws.com/myapp
-            IMAGE_TAG: latest
-          run: |
-            docker build -t myapp .
-            docker push myapp
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build Docker image
+        run: |
+          docker build -t myapp .
+
+      - name: Tag Docker image
+        run: |
+          docker tag dharani12345/myapp:1
+
+      - name: Push Docker image to Amazon ECR
+        run: |
+          docker push dharani12345/myapp:1
