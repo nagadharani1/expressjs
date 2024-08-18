@@ -28,8 +28,8 @@ jobs:
 
         - name: Build and push the tagged docker image to Amazon ECR
           env:
-            ECR_REGISTRY: myapp:1
-            ECR_REPOSITORY: myapp:1
+            ECR_REGISTRY: myapp
+            ECR_REPOSITORY: 211125698559.dkr.ecr.us-west-1.amazonaws.com/myapp
             IMAGE_TAG: latest
           run: |
             docker build -t myapp .
