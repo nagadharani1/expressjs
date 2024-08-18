@@ -28,7 +28,7 @@ jobs:
 
         - name: Build and push the tagged docker image to Amazon ECR
           env:
-            ECR_REGISTRY: myapp
+            ECR_REGISTRY: aws ecr get-login-password --region us-west-1 | docker login --username AWS --password-stdin 211125698559.dkr.ecr.us-west-1.amazonaws.com
             ECR_REPOSITORY: 211125698559.dkr.ecr.us-west-1.amazonaws.com/myapp
             IMAGE_TAG: latest
           run: |
