@@ -27,7 +27,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t myapp .
+          docker build -t dharani12345/myapp:1 .
 
       - name: Tag Docker image
         run: |
